@@ -9,6 +9,7 @@ class Case {
     private :
         bool pass = false;
     public : 
+        bool peutPasser() { return pass; }
         virtual char afficher() = 0;
         virtual ~Case() = default ; 
         virtual int effet (Aventurier & a) = 0; // est ce qu on est obligé de surhcrage une methode virtuelle ?

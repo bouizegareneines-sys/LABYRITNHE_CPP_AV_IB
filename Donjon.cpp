@@ -123,7 +123,7 @@ void Donjon::poserSortie(vector<vector<Case *>>& grille){
 void Donjon::placerElement(vector<vector<Case*>>& grille){
     for (int i=0;i<grille.size();i++){
         for(int j=0;j<grille[i].size();j++){
-            if (*(grille[i][j]).pass==true){
+            if ((*grille[i][j]).peutPasser()==true){
                 int r = rand( ) % 101;
                 if (r<5){
                     grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
@@ -155,7 +155,7 @@ void Donjon::afficher()
         }
         cout << "|" << endl;
     }
-    
+
     cout << "+";
     for(int j=0;j<grille[0].size();j++){
         cout << "-";
