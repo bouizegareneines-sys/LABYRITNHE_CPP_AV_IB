@@ -1,6 +1,6 @@
 #include "Donjon.h"
-#include "Case.cpp"
-#include "CaseFactory.cpp"
+#include "Case.h"
+#include "CaseFactory.h"
 #include <iostream>
 #include <vector>
 #include <random>
@@ -10,8 +10,28 @@ using namespace std;
 
 Donjon::Donjon()
 {
-
+    this->largeur=22;
+    this->hauteur=22;
+    this->grille.assign(22,vector<Case*>(22, nullptr));
+    this->depart={1,1};
+    this->arrivee={21,21};
 }
+
+Donjon::Donjon(int largeur,int hauteur)
+{
+    this->grille.assign(largeur,vector<Case*>(hauteur, nullptr));
+    this->depart={1,1};
+    this->arrivee={21,21};
+}
+
+Donjon::Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrivee){
+    this->largeur=largeur;
+    this->hauteur=hauteur;
+    this->grille.assign(largeur,vector<Case*>(hauteur, nullptr));
+    this->depart=depart;
+    this->arrivee=arrivee;
+}
+
 
 Donjon::~Donjon()
 {
@@ -37,31 +57,35 @@ void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
     for (auto dir:directions){
         switch(dir){
             case 1:
+                x_new=x;
                 y_new=y-2;
                 if ((y_new>1) && (this->visite_gen[x_new][y_new]==false)){
-                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
+                    grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
                     break;
                 }
                     
             case 2:
+                x_new=x;
                 y_new=y+2;
                 if ((y_new<grille[x].size()) && (this->visite_gen[x_new][y_new]==false)){
-                    *grille[x_new][y_new]=CaseFactory.createCase(TypeCase::PASSAGE);
+                    grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
                     break;
                 }
             case 3:
                 x_new=x+2;
+                y_new=y;
                 if ((x_new<grille.size()) && (this->visite_gen[x_new][y_new]==false)){
-                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
+                    grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
                     break;
                 }
             case 4:
                 x_new=x-2;
+                y_new=y;
                 if ((x_new<grille.size()) && (this->visite_gen[x_new][y_new]==false)){
-                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
+                    grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
                     break;
                 }
@@ -79,7 +103,7 @@ void Donjon::initialiserGrille(int largeur,int hauteur)
 
     for (int i=0; i<largeur;i++){
         for (int j=0;j<hauteur;j++){
-            *grille[i][j] = CaseFactory::createCase(TypeCase::MUR);
+            grille[i][j] = CaseFactory::createCase(TypeCase::MUR);
             this->visite_gen[i][j]=false;
         }
     }
@@ -89,26 +113,26 @@ void Donjon::initialiserGrille(int largeur,int hauteur)
 }
 
 void Donjon::poserEntree(vector<vector<Case *>>& grille){
-    *grille[1][1]=CaseFactory::createCase(TypeCase::PASSAGE);
+    grille[1][1]=CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
 void Donjon::poserSortie(vector<vector<Case *>>& grille){
-    *grille[(this->largeur)-1][(this->hauteur)-1]=CaseFactory::createCase(TypeCase::PASSAGE);
+    grille[(this->largeur)-1][(this->hauteur)-1]=CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
-void Donjon::placerElement(vector<vector<Case*>> grille){
+void Donjon::placerElement(vector<vector<Case*>>& grille){
     for (int i=0;i<grille.size();i++){
         for(int j=0;j<grille[i].size();j++){
-            if (typeid(*grille[i][j]).name()=="PASSAGE"){
+            if (*(grille[i][j]).pass==true){
                 int r = rand( ) % 101;
                 if (r<5){
-                    *grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
+                    grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
                 }
                 if (r<10){
-                    *grille[i][j]=CaseFactory::createCase(TypeCase::MONSTRE);
+                    grille[i][j]=CaseFactory::createCase(TypeCase::MONSTRE);
                 }
                 if (r<13){
-                    *grille[i][j]=CaseFactory::createCase(TypeCase::PIEGE);
+                    grille[i][j]=CaseFactory::createCase(TypeCase::PIEGE);
                 }
             }
         }
@@ -117,13 +141,13 @@ void Donjon::placerElement(vector<vector<Case*>> grille){
 
 void Donjon::afficher()
 {
-    for (int i=0;i<grille.size();i++){
-        cout << "+";
-        for(int j=0;j<grille[i].size();j++){
-            cout << "-";
-        }
-        cout << "+"<< endl;
+    cout << "+";
+    for(int j=0;j<grille[0].size();j++){
+        cout << "-";
     }
+    cout << "+"<< endl;
+
+    
     for (int i=0;i<grille.size();i++){
         cout << "|";
         for(int j=0;j<grille[i].size();j++){
@@ -131,17 +155,16 @@ void Donjon::afficher()
         }
         cout << "|" << endl;
     }
-    for (int i=0;i<grille.size();i++){
-        cout << "+";
-        for(int j=0;j<grille[i].size();j++){
-            cout << "-";
-        }
-        cout << "+"<< endl;
+    
+    cout << "+";
+    for(int j=0;j<grille[0].size();j++){
+        cout << "-";
     }
+    cout << "+"<< endl;
 
 }
 
-queue<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee)
+vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee)
 {
     queue<pair<int,int>> file;
 
@@ -218,19 +241,19 @@ queue<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<i
         }
         
     }
-    return queue<pair<int,int>>();
+    return {};
 }
 
-queue<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee)
+vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee)
 {
-    queue<pair<int,int>> chemin;
+    vector<pair<int,int>> chemin;
     pair<int,int> courant = arrivee;
 
     while (courant!=depart){
-        chemin.push(courant);
+        chemin.push_back(courant);
         courant=parent[courant.first][courant.second];
     }
 
-    chemin.push(depart);
+    chemin.push_back(depart);
     return chemin;
 }

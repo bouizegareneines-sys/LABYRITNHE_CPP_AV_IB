@@ -13,17 +13,19 @@ private:
     int hauteur;
     vector<vector<bool>> visite_gen;
     pair<int,int> depart;
-    pair<int,int> entree;
+    pair<int,int> arrivee;
 public:
     Donjon();
+    Donjon(int largeur,int hauteur);
+    Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrivee);
     ~Donjon();
 
     void initialiserGrille(int largeur,int hauteur);
     void genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y);
-    void placerElement(vector<vector<Case *>> grille);
+    void placerElement(vector<vector<Case *>>& grille);
     void poserEntree(vector<vector<Case *>>& grille);
     void poserSortie(vector<vector<Case *>>& grille);
 
     void afficher();
-    queue<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
-    queue<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);};
+    vector<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
+    vector<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);};
