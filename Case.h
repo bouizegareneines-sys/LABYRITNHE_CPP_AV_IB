@@ -56,7 +56,11 @@ class Monstre : public Case {
                 a.getPos()[1] = 0;
                 return 0;;
             }
+<<<<<<< HEAD
          }
+=======
+        }
+>>>>>>> 36f0b58557dcf466660be1372fe232aefb56d60f
 };
 
 class Piege : public Case{
