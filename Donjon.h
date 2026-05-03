@@ -1,21 +1,29 @@
+#pragma once
 #include <iostream>
 #include <vector>
-#include <Case.h>
-
+#include <utility>
+#include "Case.h"
 
 using namespace std;
 
 class Donjon{
 private:
-vector<vector<Case*>> grille;
+    vector<vector<Case *>> grille;
+    int largeur;
+    int hauteur;
+    vector<vector<bool>> visite_gen;
+    pair<int,int> depart;
+    pair<int,int> entree;
 public:
+    Donjon();
+    ~Donjon();
 
     void initialiserGrille(int largeur,int hauteur);
-    void genererLabyrinthe(grille,x,y);
-    void placerElements(grille);
-    void poserEntree(grille);
-    void poserSortie(grille);
+    void genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y);
+    void placerElement(vector<vector<Case *>> grille);
+    void poserEntree(vector<vector<Case *>>& grille);
+    void poserSortie(vector<vector<Case *>>& grille);
 
     void afficher();
-    vector<pair<int,int>> trouverChemin();s
-}
+    queue<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
+    queue<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);};
