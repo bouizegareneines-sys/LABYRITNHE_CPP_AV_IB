@@ -1,5 +1,7 @@
 #include <iostream>
 #include "CaseFactory.h"
+#include "Aventurier.h"
+
 using namespace std;
 
 

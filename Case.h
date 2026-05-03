@@ -6,6 +6,8 @@ using namespace std;
 
 
 class Case {
+    private :
+        bool pass = false;
     public : 
         virtual char afficher() = 0;
         virtual ~Case() = default ; 
@@ -14,18 +16,25 @@ class Case {
 
 
 class Mur : public Case {
+    private :
+        bool pass = false;
     public :
         char afficher () override;
         int effet(Aventurier& a) override;
 };
 
 class Passage : public Case {
+    private :
+        bool pass = true;
+
     public :
         char afficher () override ;
         int effet(Aventurier& a) override;
 };
 
 class Tresor : public Case{
+    private :
+        bool pass = true;
     public :
         char afficher () override;
         int effet(Aventurier& a) override;
@@ -33,6 +42,8 @@ class Tresor : public Case{
 };
 
 class Monstre : public Case {
+    private :
+        bool pass = true;
     public :
         char afficher () override;
         int effet(Aventurier& a) override;
@@ -40,6 +51,8 @@ class Monstre : public Case {
 };
 
 class Piege : public Case{
+    private :
+        bool pass = true;
     public :
         char afficher () override;
         int effet(Aventurier& a) override; 
