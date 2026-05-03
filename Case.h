@@ -1,8 +1,9 @@
+#ifndef CASE_H
+#define CASE_H
+#include "Aventurier.h"
 #include <iostream>
 using namespace std;
-#include "Aventurier.h"
 
-#define pass (void)0
 
 class Case {
     public : 
@@ -14,63 +15,35 @@ class Case {
 
 class Mur : public Case {
     public :
-        char afficher () override {
-        return '#' ;
-        }
-        int effet(Aventurier& a) override { return 0; }
+        char afficher () override;
+        int effet(Aventurier& a) override;
 };
 
 class Passage : public Case {
     public :
-        char afficher () override{
-        return ' ';
-        }
-        int effet(Aventurier& a) override { return 0; }
+        char afficher () override ;
+        int effet(Aventurier& a) override;
 };
 
 class Tresor : public Case{
-    
     public :
-        char afficher () override {
-        return '+';
-        }
-        int effet(Aventurier& a) override { 
-            a.setInventaire(a.getInventaire() + 1);
-            return a.getInventaire();
-        }
-    };
+        char afficher () override;
+        int effet(Aventurier& a) override;
+        
+};
 
 class Monstre : public Case {
-
     public :
-        char afficher() override{
-            return 'M';
-        }
-        int effet(Aventurier& a){
-            if (a.getSante() > 70){
-                a.setSante(a.getSante() -50);
-                return a.getSante();
-            }
-            else{
-                a.getPos()[0] = 0;
-                a.getPos()[1] = 0;
-                return 0;;
-            }
-        }
+        char afficher () override;
+        int effet(Aventurier& a) override;
+ 
 };
 
 class Piege : public Case{
-   
     public :
-        char afficher () override{
-            return 'T';
-        }
-        int effet(Aventurier& a){
-           a.setSante(a.getSante() -50) ;
-            if (a.getInventaire() != 0){
-                a.setInventaire(a.getInventaire() -1) ; 
-                return a.getInventaire(); 
-            }
-        }
+        char afficher () override;
+        int effet(Aventurier& a) override; 
+        
 };
 
+#endif
