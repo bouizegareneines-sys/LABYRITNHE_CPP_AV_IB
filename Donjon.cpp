@@ -1,125 +1,236 @@
 #include "Donjon.h"
+#include "Case.cpp"
+#include "CaseFactory.cpp"
+#include <iostream>
 #include <vector>
+#include <random>
+#include <bits/stdc++.h>
+using namespace std;
 
-void Donjon::Donjon()
+
+Donjon::Donjon()
 {
+
 }
 
-void Donjon::~Donjon()
+Donjon::~Donjon()
 {
+    for (int i = 0; i < largeur; i++){
+        for (int j = 0; j < hauteur; j++){
+            delete grille[i][j];
+        }
+    }
 }
 
-void Donjon::genererLabyrinthe(grille,x,y){
-    &grille[x][y].visitee=true;
+void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
+    this->visite_gen[x][y]=true;
     int x_new=x;
     int y_new=y;
 
     random_device rd;
     mt19937 g(rd());
 
-    vector<string> directions={1,2,3,4}; //NORD , SUD , EST , OUEST
+    vector<int> directions {1,2,3,4}; //HAUT, BAS , DROITE , GAUCHE
 
-    random_shuffle(directions.begin(),directions.end(),g);
+    shuffle(directions.begin(),directions.end(),g);
 
     for (auto dir:directions){
-        switch(dir):
+        switch(dir){
             case 1:
                 y_new=y-2;
-                x_new=x;
-                if ((y_new>=1) && (&grille[x_new][y_new].visitee==false)){
-                    &grille[x_new][y_new]=CaseFactory::creerCase(TypeCase::PASSAGE);
+                if ((y_new>1) && (this->visite_gen[x_new][y_new]==false)){
+                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
+                    break;
                 }
                     
             case 2:
                 y_new=y+2;
-                x_new=x;
-                if ((y_new<=grille[x].size()) && (&grille[x_new][y_new].visitee==false)){
-                    &grille[x_new][y_new]=CaseFactory::creerCase(TypeCase::PASSAGE);
+                if ((y_new<grille[x].size()) && (this->visite_gen[x_new][y_new]==false)){
+                    *grille[x_new][y_new]=CaseFactory.createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
+                    break;
                 }
             case 3:
-                y_new=y;
                 x_new=x+2;
-                if ((y_new<=grille.size()) && (&grille[x_new][y_new].visitee==false)){
-                    &grille[x_new][y_new]=CaseFactory::creerCase(TypeCase::PASSAGE);
+                if ((x_new<grille.size()) && (this->visite_gen[x_new][y_new]==false)){
+                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
+                    break;
                 }
             case 4:
-                y_new=y;
                 x_new=x-2;
-                if ((y_new<=grille.size()) && (&grille[x_new][y_new].visitee==false)){
-                    &grille[x_new][y_new]=CaseFactory::creerCase(TypeCase::PASSAGE);
+                if ((x_new<grille.size()) && (this->visite_gen[x_new][y_new]==false)){
+                    *grille[x_new][y_new]=CaseFactory::createCase(TypeCase::PASSAGE);
                     genererLabyrinthe(grille,x_new,y_new);
+                    break;
                 }
+            }
     }
 }
 
 void Donjon::initialiserGrille(int largeur,int hauteur)
 {
-    for (i=0; i<largeur;i++){
-        for (j=0;j<hauteur;j++){
-            &grille[i][j] = CaseFactory::creerCase(TypeCase::MUR)
+    this->largeur=largeur;
+    this->hauteur=hauteur;
+
+    grille.assign(largeur, vector<Case*>(hauteur, nullptr));
+    visite_gen.assign(largeur, vector<bool>(hauteur, false));
+
+    for (int i=0; i<largeur;i++){
+        for (int j=0;j<hauteur;j++){
+            *grille[i][j] = CaseFactory::createCase(TypeCase::MUR);
+            this->visite_gen[i][j]=false;
         }
     }
-    genererLabyrinthe(grille,1,1)
-    poserEntree(grille)
-    poserSortie(grille)
+    genererLabyrinthe(grille,1,1);
+    poserEntree(grille);
+    poserSortie(grille);
 }
 
-void Donjon::poserEntree(grille){
-    &grille[1][1]=CaseFactory::creerCase(TypeCase::PASSAGE);
+void Donjon::poserEntree(vector<vector<Case *>>& grille){
+    *grille[1][1]=CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
-void Donjon::poserSortie(grille){
-    &grille[][]=CaseFactory::creerCase(TypeCase::PASSAGE);
+void Donjon::poserSortie(vector<vector<Case *>>& grille){
+    *grille[(this->largeur)-1][(this->hauteur)-1]=CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
-void placerElement(grille){
-    for (i=0;i<grille.size();i++){
-        for(j=0;j<grille[i].size();j++){
-            if typeid(grille[i][j]).name()=="PASSAGE":
-                int r = rand( ) % 101
+void Donjon::placerElement(vector<vector<Case*>> grille){
+    for (int i=0;i<grille.size();i++){
+        for(int j=0;j<grille[i].size();j++){
+            if (typeid(*grille[i][j]).name()=="PASSAGE"){
+                int r = rand( ) % 101;
                 if (r<5){
-                    &grille[i][j]=CaseFactory::creerCase(TypeCase::TRESOR)
+                    *grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
                 }
                 if (r<10){
-                    &grille[i][j]=CaseFactory::creerCase(TypeCase::MONSTRE)
+                    *grille[i][j]=CaseFactory::createCase(TypeCase::MONSTRE);
                 }
                 if (r<13){
-                    &grille[i][j]=CaseFactory::creerCase(TypeCase::PIEGE)
+                    *grille[i][j]=CaseFactory::createCase(TypeCase::PIEGE);
                 }
+            }
         }
     }
 }
 
 void Donjon::afficher()
 {
-    for (i=0;i<grille.size();i++){
+    for (int i=0;i<grille.size();i++){
         cout << "+";
-        for(j=0;j<grille[i].size();j++){
-            cout << "-"
+        for(int j=0;j<grille[i].size();j++){
+            cout << "-";
         }
         cout << "+"<< endl;
     }
-    for (i=0;i<grille.size();i++){
+    for (int i=0;i<grille.size();i++){
         cout << "|";
-        for(j=0;j<grille[i].size();j++){
-            &grille[x][y].afficher();
+        for(int j=0;j<grille[i].size();j++){
+            (*grille[i][j]).afficher();
         }
-        cout() << "|" << endl;
+        cout << "|" << endl;
     }
-    for (i=0;i<grille.size();i++){
+    for (int i=0;i<grille.size();i++){
         cout << "+";
-        for(j=0;j<grille[i].size();j++){
-            cout << "-"
+        for(int j=0;j<grille[i].size();j++){
+            cout << "-";
         }
         cout << "+"<< endl;
     }
 
 }
 
-vector<pair<int,int>> Donjon::trouverChemin()
+queue<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee)
 {
+    queue<pair<int,int>> file;
 
+    vector<vector<bool>> visite;
+    visite.assign(largeur, vector<bool>(hauteur, false));
+
+    vector<vector<pair<int,int>>> parent;
+    parent.assign(largeur, vector<pair<int,int>>(hauteur, {-1,-1}));
+
+    file.push(depart);
+    visite[depart.first][depart.second]=true;
+
+    while (!file.empty()){
+        pair<int,int> courant = file.front();
+        file.pop();
+
+        int x_courant = courant.first;
+        int y_courant = courant.second;
+        int x_new = x_courant;
+        int y_new = y_courant;
+
+        if (courant==arrivee){
+            return reconstruireChemin(parent,depart,arrivee);
+        }
+        else {
+            vector<int> directions {1,2,3,4}; //HAUT, BAS , DROITE , GAUCHE
+
+            for (auto dir:directions){
+                switch(dir){
+
+                    case 1:
+                        x_new = x_courant;
+                        y_new = y_courant - 1;
+                        if ((y_new>1) && (visite[x_new][y_new]==false) && (typeid(*grille[x_new][y_new]).name()!="MUR")){
+                            visite[x_new][y_new]=true;
+                            parent[x_new][y_new]=courant;
+                            file.push({x_new,y_new});
+                        }
+                    break;
+
+                    case 2:
+                        x_new = x_courant;
+                        y_new = y_courant + 1;
+                        if ((y_new<grille[x_new].size()) && (visite[x_new][y_new]==false) && (typeid(*grille[x_new][y_new]).name()!="MUR")){
+                            visite[x_new][y_new]=true;
+                            parent[x_new][y_new]=courant;
+                            file.push({x_new,y_new});
+                        }
+                    break;
+
+                    case 3:
+                        x_new = x_courant + 1;
+                        y_new = y_courant;
+                        if ((x_new<grille.size()) && (visite[x_new][y_new]==false) && (typeid(*grille[x_new][y_new]).name()!="MUR")){
+                            visite[x_new][y_new]=true;
+                            parent[x_new][y_new]=courant;
+                            file.push({x_new,y_new});
+                        }
+                    break;
+
+                    case 4:
+                        x_new = x_courant - 1;
+                        y_new = y_courant;
+                        if ((x_new<=1) && (visite[x_new][y_new]==false) && (typeid(*grille[x_new][y_new]).name()!="MUR")){
+                            visite[x_new][y_new]=true;
+                            parent[x_new][y_new]=courant;
+                            file.push({x_new,y_new});
+                        }
+                    break;
+
+                }
+            }
+            
+        }
+        
+    }
+    return queue<pair<int,int>>();
+}
+
+queue<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee)
+{
+    queue<pair<int,int>> chemin;
+    pair<int,int> courant = arrivee;
+
+    while (courant!=depart){
+        chemin.push(courant);
+        courant=parent[courant.first][courant.second];
+    }
+
+    chemin.push(depart);
+    return chemin;
 }
