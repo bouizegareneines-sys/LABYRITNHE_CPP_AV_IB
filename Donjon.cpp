@@ -172,7 +172,7 @@ void Donjon::placerElement(vector<vector<Case*>>& grille){
     }
 }
 
-void Donjon::afficher(Aventurier joueur)
+void Donjon::afficher(pair<int,int> posJoueur)
 {
     cout << "+";
     for(int j=0;j<largeur;j++){
@@ -187,7 +187,7 @@ void Donjon::afficher(Aventurier joueur)
     for (int i=0;i<hauteur;i++){
         cout << "|";
         for(int j=0;j<largeur;j++){
-            if ((joueur.getPos().second==i)&&(joueur.getPos().first==j)){
+            if ((posJoueur.first==i)&&(posJoueur.second==j)){
                 cout << " ";
                 joueur.afficher();
             }
@@ -303,7 +303,6 @@ vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> p
     return chemin;
 }
 
-
 Case* Donjon :: getCase(int x, int y) {
-    return grille[y][x]; 
+    return grille[x][y]; 
 }

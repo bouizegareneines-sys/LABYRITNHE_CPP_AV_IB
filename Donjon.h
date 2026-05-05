@@ -38,7 +38,7 @@ class Donjon{
         void poserEntree(vector<vector<Case *>>& grille);
         void poserSortie(vector<vector<Case *>>& grille);
 
-        void afficher(Aventurier joueur);
+        void afficher(pair<int,int> posJoueur);
         vector<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
         vector<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);
 
