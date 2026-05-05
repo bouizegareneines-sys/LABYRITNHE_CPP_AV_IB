@@ -1,5 +1,11 @@
 #ifndef CASE_H
 #define CASE_H
+
+/*
+ * @file Case.h
+ * @brief Créer les différents types de cases qui héritent de la classse mère virtuelle. Indique également si une case est franchissable. 
+ */
+
 #include "Aventurier.h"
 #include <iostream>
 using namespace std;
@@ -13,7 +19,7 @@ class Case {
         bool peutPasser() { return pass; };
         virtual char afficher() = 0;
         virtual ~Case() = default ; 
-        virtual int effet (Aventurier & a) = 0; // est ce qu on est obligé de surhcrage une methode virtuelle ?
+        virtual int effet (Aventurier & a) = 0;
 };
 
 

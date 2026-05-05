@@ -1,6 +1,11 @@
 #ifndef JEU_H
 #define JEU_H
 
+/*
+ * @file Jeu.h
+ * @brief Déroule la logique d'une partie de jeu avec affichage de la grille et boucle de jeu.
+ */
+
 #include "Aventurier.h"
 #include "Donjon.h"
 #include "Case.h"

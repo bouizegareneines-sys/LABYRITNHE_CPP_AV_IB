@@ -5,7 +5,7 @@
 
 
 Case* CaseFactory :: createCase(TypeCase type){
-// est ce que ca apport vrmt qlqch de mettre un switch ?
+
     if (type == TypeCase :: MUR){
             return new Mur(); 
         }

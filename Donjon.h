@@ -1,3 +1,11 @@
+/*
+ * @file Donjon.h
+ * @brief Gestion de la grille de jeu et de la navigation.
+ */
+
+#ifndef DONJON_H
+#define DONJON_H
+
 #pragma once
 #include <iostream>
 #include <vector>
@@ -6,6 +14,14 @@
 #include "Aventurier.h"
 
 using namespace std;
+
+/*
+ * @class Donjon
+ * @brief Représente le plateau de jeu composé d'une grille de cases.
+ * 
+ * Cette classe gère l'initialisation du niveau, l'affichage de la carte
+ * et le calcul du chemin optimal entre le départ et l'arrivée.
+ */
 
 class Donjon{
     private:
@@ -19,6 +35,9 @@ class Donjon{
         vector<pair<int,int>> chemin_restant;
 
     public:
+        /*
+        @brief Constructeur par défaut de la classe Donjon.
+        */
         Donjon();
         Donjon(int largeur,int hauteur);
         Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrivee);
@@ -44,3 +63,4 @@ class Donjon{
 
         Case* getCase(int x, int y);
 };
+#endif
