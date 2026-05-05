@@ -8,7 +8,7 @@ void Jeu::afficherStatut() {
     cout << "Position du joueur : " << joueur.getPos() << "\n"; 
     cout << "Sante du joueur : " << joueur.getSante() << "/100\n";
     cout << "Inventaire : " << joueur.getInventaire() << " tresors\n";
-    cout << "Nombre de cases restantes : " << plateau.size << endl; ///
+    cout << "Nombre de cases restantes : " << plateau.getChemin().size() << endl; ///
     cout << "----------------------------------\n";
 }
 
@@ -21,7 +21,7 @@ void Jeu::resoudreCase(Case* c) {
 void Jeu::EndGame(Donjon& plateau) {
     if (!joueur.estVivant()) {
         cout << "Fin de la partie : Vous etes mort ...." << endl;
-    } else if(joueur.estVivant() && plateau.getArrivee()) {
+    } else if(joueur.estVivant() && (joueur.getPos()[0],joueur.getPos()[1] == plateau.getArrivee())) {
         cout << "Fin de la partie : Vous avez gagne !!! " << endl;
     }
 }

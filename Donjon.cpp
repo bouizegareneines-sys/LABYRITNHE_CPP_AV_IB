@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 #include <bits/stdc++.h>
+#include "Aventurier.h"
 using namespace std;
 
 
@@ -43,6 +44,9 @@ pair<int,int> Donjon::getDepart(){
 }
 pair<int,int> Donjon::getArrivee(){
     return this->arrivee;
+}
+vector<pair<int,int>> Donjon::getChemin(){
+    return this->chemin_restant;
 }
 
 
@@ -143,7 +147,6 @@ void Donjon::poserSortie(vector<vector<Case *>>& grille){
 }
 
 void Donjon::placerElement(vector<vector<Case*>>& grille){
-    /*
     for (int i=0;i<largeur;i++){
         for(int j=0;j<hauteur;j++){
             if ((*grille[i][j]).peutPasser()==true){
@@ -162,40 +165,11 @@ void Donjon::placerElement(vector<vector<Case*>>& grille){
                 }
             }
         }
-    }
-    */
-    cout << "placerElement called" << endl;
-    int count_passages = 0;
-    int count_placed = 0;
     
-    for (int i=0; i<largeur; i++){
-        for(int j=0; j<hauteur; j++){
-            if ((*grille[i][j]).peutPasser()==true){
-                count_passages++;
-                int r = rand() % 101;
-                if (r<5){
-                    delete grille[i][j];
-                    grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
-                    count_placed++;
-                }
-                else if (r<10){
-                    delete grille[i][j];
-                    grille[i][j]=CaseFactory::createCase(TypeCase::MONSTRE);
-                    count_placed++;
-                }
-                else if (r<13){
-                    delete grille[i][j];
-                    grille[i][j]=CaseFactory::createCase(TypeCase::PIEGE);
-                    count_placed++;
-                }
-            }
-        }
     }
-    cout << "Passages found: " << count_passages << endl;
-    cout << "Elements placed: " << count_placed << endl;
 }
 
-void Donjon::afficher()
+void Donjon::afficher(Aventurier joueur)
 {
     cout << "+";
     for(int j=0;j<largeur;j++){
@@ -210,9 +184,14 @@ void Donjon::afficher()
     for (int i=0;i<hauteur;i++){
         cout << "|";
         for(int j=0;j<largeur;j++){
-            cout << " ";
-            cout << (*grille[i][j]).afficher();
-            
+            if ((joueur.getPos()[0]==i)&&(joueur.getPos()[1]==j)){
+                cout << " ";
+                joueur.afficher();
+            }
+            else {
+                cout << " ";
+                cout << (*grille[i][j]).afficher();
+            }
         }
         cout << " ";
         cout << "|" << endl;
@@ -307,6 +286,7 @@ vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<
 
 vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee)
 {
+    
     vector<pair<int,int>> chemin;
     pair<int,int> courant = arrivee;
 
@@ -316,5 +296,6 @@ vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> p
     }
 
     chemin.push_back(depart);
+    this->chemin_restant=chemin;
     return chemin;
 }
