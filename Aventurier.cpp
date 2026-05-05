@@ -3,6 +3,7 @@
 #include "Aventurier.h"
 using namespace std; 
 
+Aventurier::Aventurier() : sante(100), inventaire(0), pos({1,1}) {}
 
 Aventurier::Aventurier(int sante, int inventaire,pair<int,int> pos){
     this -> sante = sante ;
