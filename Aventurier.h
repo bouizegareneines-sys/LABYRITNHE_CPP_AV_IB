@@ -10,20 +10,20 @@ class Aventurier{
 
         int sante; 
         int inventaire; 
-        int pos[2]; 
+        pair<int,int> pos; 
 
     public : 
 
         Aventurier();
-        Aventurier(int sante, int inventaire, int pos[2]);
+        Aventurier(int sante, int inventaire, pair<int,int> pos);
 
         int getSante();
         int getInventaire();
         void setSante(int s);
         void setInventaire(int i);
-        int* getPos();
+        pair<int,int> getPos();
 
-        int* deplacer(int nx, int ny);
+        pair<int,int> deplacer(int nx, int ny);
         bool estVivant();
         void afficher();
 

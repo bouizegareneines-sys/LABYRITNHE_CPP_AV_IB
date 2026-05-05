@@ -39,6 +39,9 @@ int Donjon::getLargeur(){
 int Donjon::getHauteur(){
     return this->hauteur;
 }
+vector<vector<Case *>> Donjon::getGrille(){
+    return this->grille;
+}
 pair<int,int> Donjon::getDepart(){
     return this->depart;
 }
@@ -298,4 +301,9 @@ vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> p
     chemin.push_back(depart);
     this->chemin_restant=chemin;
     return chemin;
+}
+
+
+Case* Donjon :: getCase(int x, int y) {
+    return grille[y][x]; 
 }

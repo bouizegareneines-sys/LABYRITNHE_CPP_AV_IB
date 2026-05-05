@@ -14,12 +14,11 @@ class Jeu
 
     private :
         Aventurier joueur;
-        Donjon plateau;
     public:
         Jeu();
         ~Jeu();
         
-        void Jeu :: afficherStatut();
+        void Jeu :: afficherStatut(Donjon& Plateau);
         void Jeu::resoudreCase(Case* c);
         void Jeu :: EndGame(Donjon& plateau);
         void BoucleDeJeu(Donjon& plateau);
