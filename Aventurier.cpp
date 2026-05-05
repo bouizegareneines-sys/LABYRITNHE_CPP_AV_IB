@@ -1,47 +1,35 @@
 #include <iostream>
+#include "Aventurier.h"
 using namespace std; 
 
-class Aventurier{
+Aventurier::Aventurier(int sante, int inventaire, int pos[2]){
+    this -> sante = sante ;
+    this ->inventaire = inventaire;
+    this -> pos[0] = pos[0];
+    this -> pos[1] = pos[1];
+}
 
-    private: 
+int Aventurier::getSante() { return sante; }
+int Aventurier::getInventaire() { return inventaire; }
+void Aventurier::setSante(int s) { sante = s; }
+void Aventurier::setInventaire(int i) { inventaire = i; }
+int* Aventurier::getPos() { return pos; }
 
-        int sante; //nombre de vie restantes
-        int inventaire; // nombre de trésors dans l'inventaire
-        int pos[2]; //position en x pour pos[0] et en y pour pos[1]
+int* Aventurier::deplacer(int nx, int ny) {
 
+    int new_posx = pos[0] + nx ;
+    int new_posy = pos[1] + ny ;
 
-    public : 
+    pos[0] = new_posx;
+    pos[1] = new_posy;
 
-        Aventurier(int sante, int inventaire, int pos[2]){
-            this -> sante = sante ;
-            this ->inventaire = inventaire;
-            this -> pos[0] = pos[0];
-            this -> pos[1] = pos[1];
-        }
+    return pos;
+}
 
-        int getSante() { return sante; }
-        int getInventaire() { return inventaire; }
-        void setSante(int s) { sante = s; }
-        void setInventaire(int i) { inventaire = i; }
-        int* getPos() { return pos; }
+bool Aventurier::estVivant(){
+    return sante > 0 ;
+}
 
-        int* deplacer(int nx, int ny) {
-
-            int new_posx = pos[0] + nx ;
-            int new_posy = pos[1] + ny ;
-
-            pos[0] = new_posx;
-            pos[1] = new_posy;
-
-            return pos;
-        }
-
-        bool estVivant(){
-            return sante > 0 ;
-        }
-
-        void afficher(){
-            cout <<"@";
-        }
-
-};
+void Aventurier::afficher(){
+    cout <<"@";
+}

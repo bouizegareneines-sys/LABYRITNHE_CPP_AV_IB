@@ -9,7 +9,8 @@ class Case {
     private :
         bool pass = false;
     public : 
-        bool peutPasser() { return pass; }
+        Case(bool pass) : pass(pass) {};
+        bool peutPasser() { return pass; };
         virtual char afficher() = 0;
         virtual ~Case() = default ; 
         virtual int effet (Aventurier & a) = 0; // est ce qu on est obligé de surhcrage une methode virtuelle ?
@@ -17,44 +18,39 @@ class Case {
 
 
 class Mur : public Case {
-    private :
-        bool pass = false;
+
     public :
+        Mur() : Case(false){};
         char afficher () override;
         int effet(Aventurier& a) override;
 };
 
 class Passage : public Case {
-    private :
-        bool pass = true;
-
     public :
+        Passage() : Case(true){};
         char afficher () override ;
         int effet(Aventurier& a) override;
 };
 
 class Tresor : public Case{
-    private :
-        bool pass = true;
     public :
+        Tresor() : Case(true){};
         char afficher () override;
         int effet(Aventurier& a) override;
         
 };
 
 class Monstre : public Case {
-    private :
-        bool pass = true;
     public :
+        Monstre() : Case(true){};
         char afficher () override;
         int effet(Aventurier& a) override;
  
 };
 
 class Piege : public Case{
-    private :
-        bool pass = true;
     public :
+        Piege() : Case(true){};
         char afficher () override;
         int effet(Aventurier& a) override; 
         

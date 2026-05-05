@@ -20,6 +20,12 @@ public:
     Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrivee);
     ~Donjon();
 
+    int getLargeur();
+    int getHauteur();
+    pair<int,int> getDepart();
+    pair<int,int> getArrivee();
+
+
     void initialiserGrille(int largeur,int hauteur);
     void genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y);
     void placerElement(vector<vector<Case *>>& grille);
