@@ -187,7 +187,7 @@ void Donjon::afficher(Aventurier joueur)
     for (int i=0;i<hauteur;i++){
         cout << "|";
         for(int j=0;j<largeur;j++){
-            if ((joueur.getPos()[0]==i)&&(joueur.getPos()[1]==j)){
+            if ((joueur.getPos().second==i)&&(joueur.getPos().first==j)){
                 cout << " ";
                 joueur.afficher();
             }
