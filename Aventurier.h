@@ -22,6 +22,7 @@ class Aventurier{
         void setSante(int s);
         void setInventaire(int i);
         pair<int,int> getPos();
+        void setPos(int pos_x,int pos_y);
 
         pair<int,int> deplacer(int nx, int ny);
         bool estVivant();

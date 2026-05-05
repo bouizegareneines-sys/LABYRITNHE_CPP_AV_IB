@@ -33,22 +33,22 @@ Donjon::Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrive
     this->arrivee=arrivee;
 }
 
-int Donjon::getLargeur(){
+int& Donjon::getLargeur(){
     return this->largeur;
 }
-int Donjon::getHauteur(){
+int& Donjon::getHauteur(){
     return this->hauteur;
 }
-vector<vector<Case *>> Donjon::getGrille(){
+vector<vector<Case *>>& Donjon::getGrille(){
     return this->grille;
 }
-pair<int,int> Donjon::getDepart(){
+pair<int,int>& Donjon::getDepart(){
     return this->depart;
 }
-pair<int,int> Donjon::getArrivee(){
+pair<int,int>& Donjon::getArrivee(){
     return this->arrivee;
 }
-vector<pair<int,int>> Donjon::getChemin(){
+vector<pair<int,int>>& Donjon::getChemin(){
     return this->chemin_restant;
 }
 

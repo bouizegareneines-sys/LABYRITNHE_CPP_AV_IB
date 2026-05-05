@@ -13,6 +13,7 @@ int Aventurier::getInventaire() { return inventaire; }
 void Aventurier::setSante(int s) { sante = s; }
 void Aventurier::setInventaire(int i) { inventaire = i; }
 pair<int,int> Aventurier::getPos() { return pos; }
+void Aventurier::setPos(int pos_x,int pos_y){ pos.first=pos_x; pos.second=pos_y;}
 
 pair<int,int> Aventurier::deplacer(int nx, int ny) {
 

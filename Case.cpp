@@ -14,7 +14,7 @@ int Mur::effet(Aventurier& a) {
 }
 
 char Passage :: afficher () {
-return ' ';
+    return ' ';
 }
 int Passage :: effet(Aventurier& a) { return 0; }
 
@@ -27,17 +27,17 @@ int Tresor::effet(Aventurier& a) {
     return a.getInventaire();
 }
 
-
 char Monstre::afficher() {
     return 'M';
 }
+
 int Monstre::effet(Aventurier& a) {
     if (a.getSante() > 70) {
         a.setSante(a.getSante() - 50);
         return a.getSante();
-    } else {
-        a.getPos()[0] = 0;
-        a.getPos()[1] = 0;
+    } 
+    else {
+        a.setPos(0,0);
         return 0;
     }
 }

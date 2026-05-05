@@ -24,12 +24,12 @@ class Donjon{
         Donjon(int largeur,int hauteur,pair<int,int> depart,pair<int,int> arrivee);
         ~Donjon();
 
-        int getLargeur();
-        int getHauteur();
-        vector<vector<Case *>> getGrille();
-        pair<int,int> getDepart();
-        pair<int,int> getArrivee();
-        vector<pair<int,int>> getChemin();
+        int& getLargeur();
+        int& getHauteur();
+        vector<vector<Case *>>& getGrille();
+        pair<int,int>& getDepart();
+        pair<int,int>& getArrivee();
+        vector<pair<int,int>>& getChemin();
 
 
         void initialiserGrille(int largeur,int hauteur);
