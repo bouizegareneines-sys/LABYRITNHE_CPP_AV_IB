@@ -20,9 +20,10 @@ class Jeu
         ~Jeu();
         
         void Jeu :: afficherStatut();
-        void BoucleDeJeu(Donjon& plateau);
         void Jeu::resoudreCase(Case* c);
         void Jeu :: EndGame(Donjon& plateau);
+        void BoucleDeJeu(Donjon& plateau);
+        
 
 
 
