@@ -33,7 +33,10 @@ void Aventurier::afficher(){
     cout <<"@";
 }
 
-ostream& operator<< (ostream &pos, const &pos) {
+ostream& operator<< (ostream& o, const pair<int, int>& p) {
     
-    cout << "Coordonées actuelles du joueur : [" << pos.first  << "," << pos.second << "]" << endl ;
+    o << "[" << p.first  << "," << p.second << "]" << endl ;
+
+    return o;
+
 }
