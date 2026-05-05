@@ -1,6 +1,13 @@
 #include <iostream>
 #include "Jeu.h"
 
+Jeu::Jeu(): joueur(){
+
+}
+
+Jeu::~Jeu(){
+}
+
 
 void Jeu::afficherStatut(Donjon& plateau) {
     cout << "----------------------------------\n";
@@ -29,7 +36,7 @@ void Jeu::BoucleDeJeu(Donjon& plateau) {
     char commande;
     
     while (joueur.estVivant() && !(joueur.getPos() == plateau.getArrivee())) {
-        plateau.afficher(joueur);
+        plateau.afficher(joueur.getPos());
         afficherStatut(plateau); 
 
         cout << "(z,q,s,d) pour bouger, p pour demander chemin ideal : ";
