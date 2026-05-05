@@ -2,7 +2,6 @@
 #include "Jeu.h"
 
 
-
 void Jeu::afficherStatut(Donjon& plateau) {
     cout << "----------------------------------\n";
     cout << "Position du joueur : " << joueur.getPos() << "\n"; 

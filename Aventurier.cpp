@@ -1,6 +1,8 @@
 #include <iostream>
+
 #include "Aventurier.h"
 using namespace std; 
+
 
 Aventurier::Aventurier(int sante, int inventaire,pair<int,int> pos){
     this -> sante = sante ;

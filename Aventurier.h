@@ -2,7 +2,9 @@
 #define AVENTURIER_H
 
 #include <iostream>
-using namespace std; 
+#include <utility>
+using namespace std;
+
 
 class Aventurier{
 
@@ -21,6 +23,7 @@ class Aventurier{
         int getInventaire();
         void setSante(int s);
         void setInventaire(int i);
+
         pair<int,int> getPos();
         void setPos(int pos_x,int pos_y);
 
@@ -29,6 +32,8 @@ class Aventurier{
         void afficher();
 
 };
+
+ostream& operator<<(ostream& o, const pair<int, int>& p);
 
 #endif
 

@@ -21,7 +21,6 @@ class Jeu
         ~Jeu();
         
         void Jeu :: afficherStatut(Donjon& Plateau);
-        ostream& operator<<(ostream& o, const pair<int, int>& p);
         void Jeu::resoudreCase(Case* c);
         void Jeu :: EndGame(Donjon& plateau);
         void BoucleDeJeu(Donjon& plateau);
