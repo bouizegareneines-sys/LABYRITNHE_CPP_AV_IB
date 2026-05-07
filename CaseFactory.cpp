@@ -1,3 +1,7 @@
+// Projet C++ //
+// Verdier Adélie --- 21502087 --- //
+// Bouizegarene Ines --- 21213221 --- //
+
 #include "CaseFactory.h"
 #include "Case.h"
 #include "Aventurier.h"

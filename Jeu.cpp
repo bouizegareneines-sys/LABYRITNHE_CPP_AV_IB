@@ -1,13 +1,12 @@
+// Projet C++ //
+// Verdier Adélie --- 21502087 --- //
+// Bouizegarene Ines --- 21213221 --- //
+
 #include <iostream>
 #include "Jeu.h"
 
-Jeu::Jeu(): joueur(){
-
-}
-
-Jeu::~Jeu(){
-}
-
+Jeu::Jeu(): joueur(){}
+Jeu::~Jeu(){}
 
 void Jeu::afficherStatut(Donjon& plateau) {
     cout << "----------------------------------\n";

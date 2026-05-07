@@ -1,3 +1,7 @@
+// Projet C++ //
+// Verdier Adélie --- 21502087 --- //
+// Bouizegarene Ines --- 21213221 --- //
+
 #include "Donjon.h"
 #include "Case.h"
 #include "CaseFactory.h"
@@ -7,7 +11,6 @@
 #include <bits/stdc++.h>
 #include "Aventurier.h"
 using namespace std;
-
 
 Donjon::Donjon()
 {
@@ -293,7 +296,6 @@ vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<
 
 vector<pair<int,int>> Donjon::reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee)
 {
-    
     vector<pair<int,int>> chemin;
     pair<int,int> courant = arrivee;
 

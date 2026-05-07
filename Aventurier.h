@@ -1,6 +1,9 @@
+// Projet C++ //
+// Verdier Adélie --- 21502087 --- //
+// Bouizegarene Ines --- 21213221 --- //
+
 #ifndef AVENTURIER_H
 #define AVENTURIER_H
-
 /** 
  * @file Aventurier.h
  * @brief Définit les caracteristiques du joueur et les actions qui lui sont reliés à lui ou son inventaire.
@@ -10,9 +13,7 @@
 #include <utility>
 using namespace std;
 
-
 class Aventurier{
-
     private: 
 
         int sante; // Point de santé du joueur/100
@@ -60,8 +61,8 @@ class Aventurier{
 };
 
 /**
-        * @brief Surcharge de l'opérateur << pour pouvor afficher la position du joueur. 
-        */
+* @brief Surcharge de l'opérateur << pour pouvor afficher la position du joueur. 
+*/
 ostream& operator<<(ostream& o, const pair<int, int>& p);
 
 #endif

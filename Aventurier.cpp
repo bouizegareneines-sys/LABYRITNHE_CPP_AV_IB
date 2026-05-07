@@ -1,5 +1,8 @@
-#include <iostream>
+// Projet C++ //
+// Verdier Adélie --- 21502087 --- //
+// Bouizegarene Ines --- 21213221 --- //
 
+#include <iostream>
 #include "Aventurier.h"
 using namespace std; 
 
