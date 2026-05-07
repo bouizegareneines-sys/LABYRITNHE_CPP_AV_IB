@@ -33,6 +33,7 @@ class Donjon{
         pair<int,int> arrivee;
         Aventurier joueur;
         vector<pair<int,int>> chemin_restant;
+        bool flag_chemin=false;
 
     public:
         /*
@@ -49,6 +50,7 @@ class Donjon{
         pair<int,int>& getDepart();
         pair<int,int>& getArrivee();
         vector<pair<int,int>>& getChemin();
+        void setFlag(bool flag);
 
 
         void initialiserGrille(int largeur,int hauteur);
@@ -57,7 +59,7 @@ class Donjon{
         void poserEntree(vector<vector<Case *>>& grille);
         void poserSortie(vector<vector<Case *>>& grille);
 
-        void afficher(pair<int,int> posJoueur);
+        void afficher(pair<int,int> posJoueur,vector<pair<int,int>> chemin);
         vector<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
         vector<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);
 
