@@ -36,7 +36,7 @@ class Donjon{
         pair<int,int> arrivee; // coordonnées de la case d'arrivée
         Aventurier joueur; // instance de la classe Aventurier
         vector<pair<int,int>> chemin_restant; // Vecteur de coordonnées restsantes
-        bool flag_chemin=false;
+        bool flag_chemin=false; //flag indiquant l'affichage du chemin optimal
 
     public:
     
@@ -54,50 +54,52 @@ class Donjon{
         pair<int,int>& getDepart();
         pair<int,int>& getArrivee();
         vector<pair<int,int>>& getChemin();
+
+        /**
+         * @brief Setter du flag indiquant si le joueur veut voir le chemin optimal vers la sortie
+         */
         void setFlag(bool flag);
 
         /**
-        * @brief A COMPLETER.
+        * @brief Code d'initialisation de la grille. Récupère les dimensions du plateau, genère une grille de murs et engendre la génération d'un labyrinthe avec entrée, sortie et éléments interactifs
         */
         void initialiserGrille(int largeur,int hauteur); 
 
         /**
-        * @brief A COMPLETER.
+        * @brief Code de tracé des passages du labyrinthe. Creuses les cases de la grille en passages.
         */
         void genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y);
          /**
-        * @brief A COMPLETER
+        * @brief Place aléatoirement des cases de types interactifs en modifiant les case pointées par la grille.
         */
         void placerElement(vector<vector<Case *>>& grille);
 
          /**
-        * @brief A COMPLETER
+        * @brief Fait en sorte que la case a la coordonées "depart" est un passage.
         */
 
         void poserEntree(vector<vector<Case *>>& grille);
 
         /**
-        * @brief  /**
-        * @brief Setters permettant de modifier la valeur des attributs privés de la classe 
-        *  et getters permet de lire les attributs privés de la classe dans d'autre classe.
+        * @brief Fait en sorte que la case a la coordonées "arrivee" est un passage. 
         */
 
         void poserSortie(vector<vector<Case *>>& grille);
 
          /**
-        * @brief  A COMPLETER
+        * @brief  Affiche les cases de la grille dans le terminal.
         */
         void afficher(pair<int,int> posJoueur,vector<pair<int,int>> chemin);
         /**
-        * @brief A COMPLETER
+        * @brief Traverse le labyrinthe jusqu'à trouver un chemin optimal et le renvoie sous forme de vecteur de coordonnées.
         */
         vector<pair<int,int>> trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee);
         /**
-        * @brief A COMPLETER
+        * @brief Retrace le chemin menant à l'arrivee et le renvoie sous forme de vecteur de coordonnées.
         */
         vector<pair<int,int>> reconstruireChemin(vector<vector<pair<int,int>>> parent,pair<int,int> depart,pair<int,int> arrivee);
          /**
-        * @brief A COMPLETER
+        * @brief Renvoie la case indiquée par les coordonnées x et y.
         */
         Case* getCase(int x, int y);
 };

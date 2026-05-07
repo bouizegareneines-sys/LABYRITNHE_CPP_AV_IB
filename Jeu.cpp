@@ -32,6 +32,7 @@ void Jeu::Combat(Donjon& plateau,Case* c,int nx, int ny, int posx,int posy){
             resoudreCase(c);
             joueur.deplacer(nx, ny);
             cout << "Le Monstre est vaincu! Mais il a fait quelques degats" <<endl;
+            delete plateau.getGrille()[posx+nx][posy+ny];
             plateau.getGrille()[posx+nx][posy+ny] = CaseFactory::createCase(TypeCase::PASSAGE);
             break;
         case 'n':
@@ -73,7 +74,7 @@ void Jeu::BoucleDeJeu(Donjon& plateau) {
             case 's': if (plateau.getCase(joueur.getPos().first+1,joueur.getPos().second)->peutPasser()) 
                 {
                     if (plateau.getCase(joueur.getPos().first+1,joueur.getPos().second)->peutSeBattre()){
-                        Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),1,0,joueur.getPos().first,joueur.getPos().second);
+                        Combat(plateau,plateau.getCase(joueur.getPos().first+1,joueur.getPos().second),1,0,joueur.getPos().first,joueur.getPos().second);
                         continue;
                     }
                     else {joueur.deplacer(1, 0);}
@@ -82,7 +83,7 @@ void Jeu::BoucleDeJeu(Donjon& plateau) {
             case 'q': if (plateau.getCase(joueur.getPos().first,joueur.getPos().second-1)->peutPasser()) 
             {
                 if (plateau.getCase(joueur.getPos().first,joueur.getPos().second-1)->peutSeBattre()){
-                    Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),0,-1,joueur.getPos().first,joueur.getPos().second);
+                    Combat(plateau,plateau.getCase(joueur.getPos().first,joueur.getPos().second-1),0,-1,joueur.getPos().first,joueur.getPos().second);
                     continue;
                 }
                 else {joueur.deplacer(0, -1);}
@@ -90,8 +91,8 @@ void Jeu::BoucleDeJeu(Donjon& plateau) {
                 break;
             case 'd': if (plateau.getCase(joueur.getPos().first,joueur.getPos().second+1)->peutPasser()) 
             {
-                if (plateau.getCase(joueur.getPos().first-1,joueur.getPos().second)->peutSeBattre()){
-                    Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),0,1,joueur.getPos().first,joueur.getPos().second);
+                if (plateau.getCase(joueur.getPos().first,joueur.getPos().second+1)->peutSeBattre()){
+                    Combat(plateau,plateau.getCase(joueur.getPos().first,joueur.getPos().second+1),0,1,joueur.getPos().first,joueur.getPos().second);
                     continue;
                 }
                 else {joueur.deplacer(0, 1);}

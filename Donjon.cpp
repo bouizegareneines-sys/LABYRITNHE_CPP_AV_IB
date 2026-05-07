@@ -79,11 +79,11 @@ void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
 
     vector<int> directions {1,2,3,4}; //HAUT, BAS , DROITE , GAUCHE
 
-    shuffle(directions.begin(),directions.end(),g);
+    shuffle(directions.begin(),directions.end(),g); // mélange aléatoire des directions
 
     for (auto dir:directions){
         switch(dir){
-            case 1:
+            case 1: //HAUT
                 x_new=x;
                 y_new=y-2;
                 if ((y_new>=1) && (!visite_gen[x_new][y_new])){
@@ -92,7 +92,7 @@ void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
                     genererLabyrinthe(grille,x_new,y_new);
                 }
                 break;   
-            case 2:
+            case 2: //BAS
                 x_new=x;
                 y_new=y+2;
                 if ((y_new<=hauteur-2) && (!visite_gen[x_new][y_new])){
@@ -101,7 +101,7 @@ void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
                     genererLabyrinthe(grille,x_new,y_new);
                 }
                 break;
-            case 3:
+            case 3: //DROITE
                 x_new=x+2;
                 y_new=y;
                 if ((x_new<=largeur-2) && (!visite_gen[x_new][y_new])){
@@ -110,7 +110,7 @@ void Donjon::genererLabyrinthe(vector<vector<Case *>>& grille,int x,int y){
                     genererLabyrinthe(grille,x_new,y_new);
                 }
                 break;
-            case 4:
+            case 4: //GAUCHE
                 x_new=x-2;
                 y_new=y;
                 if ((x_new>=1) && (!visite_gen[x_new][y_new])){
@@ -139,7 +139,7 @@ void Donjon::initialiserGrille(int largeur,int hauteur)
         }
     }
     delete grille[1][1];
-    grille[1][1] = CaseFactory::createCase(TypeCase::PASSAGE);
+    grille[1][1] = CaseFactory::createCase(TypeCase::PASSAGE); // entrée décallée par la bordure 
     genererLabyrinthe(grille, 1, 1);
     poserEntree(grille);
     poserSortie(grille);
@@ -147,12 +147,12 @@ void Donjon::initialiserGrille(int largeur,int hauteur)
 }
 
 void Donjon::poserEntree(vector<vector<Case *>>& grille){
-    delete grille[1][1];
+    delete grille[1][1]; // entrée décallée par la bordure 
     grille[1][1]=CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
 void Donjon::poserSortie(vector<vector<Case *>>& grille){
-    delete grille[largeur-2][hauteur-2];
+    delete grille[largeur-2][hauteur-2]; // sortie décallée par la bordure et par l'algorithme récursif (requiert des dimensions impaires)
     grille[largeur-2][hauteur-2] = CaseFactory::createCase(TypeCase::PASSAGE);
 }
 
@@ -160,7 +160,7 @@ void Donjon::placerElement(vector<vector<Case*>>& grille){
     for (int i=0;i<largeur;i++){
         for(int j=0;j<hauteur;j++){
             if ((*grille[i][j]).peutPasser()==true){
-                int r = rand( ) % 101;
+                int r = rand( ) % 101; // nombre aléatoire entre 0 et 100
                 if (r<5){
                     delete grille[i][j];
                     grille[i][j]=CaseFactory::createCase(TypeCase::TRESOR);
@@ -183,36 +183,36 @@ void Donjon::afficher(pair<int,int> posJoueur,vector<pair<int,int>> chemin)
 {
     cout << "+";
     for(int j=0;j<largeur;j++){
-        cout << " ";
+        cout << " "; //espaces ajoutés pour la lisibilité
         cout << "-";
         
     }
-    cout << " ";
+    cout << " ";//espaces ajoutés pour la lisibilité
     cout << "+"<< endl;
 
 
     for (int i=0;i<hauteur;i++){
         cout << "|";
         for(int j=0;j<largeur;j++){
-            cout << " ";
-            if ((posJoueur.first==i) && (posJoueur.second==j)){
+            cout << " "; //espaces ajoutés pour la lisibilité
+            if ((posJoueur.first==i) && (posJoueur.second==j)){ //Affichage du joueur
                 joueur.afficher();
-            } else if (flag_chemin && count(chemin.begin(), chemin.end(), make_pair(i,j)) > 0){
+            } else if (flag_chemin && count(chemin.begin(), chemin.end(), make_pair(i,j)) > 0){ //affichage du chemin optimal 
                 cout << ".";
             } else {
                 cout << (*grille[i][j]).afficher();
             }
         }
-        cout << " ";
+        cout << " "; //espaces ajoutés pour la lisibilité
         cout << "|" << endl;
     }
 
     cout << "+";
     for(int j=0;j<largeur;j++){
-        cout << " ";
+        cout << " "; //espaces ajoutés pour la lisibilité
         cout << "-";
     }
-    cout << " ";
+    cout << " "; //espaces ajoutés pour la lisibilité
     cout << "+"<< endl;
     flag_chemin=false;
 }

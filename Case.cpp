@@ -36,15 +36,19 @@ char Monstre::afficher() {
 }
 
 int Monstre::effet(Aventurier& a) {
-    
-    if (a.getSante() > 70) {
-        a.setSante(a.getSante() - 40);
-        return a.getSante();
+    int degat = 10;
+    if (a.getInventaire() >= 2) {
+        degat = 5;
+    }
+    if ((a.getSante() - degat) <= 0) {
+        a.setPos(1, 1);
+        a.setSante(100); 
+        cout << "Vous vous reveillez a l'entree du donjon..." << endl;
     } 
     else {
-        return 0;
+        a.setSante(a.getSante() - degat);
     }
-
+    return a.getSante();
 }
         
 

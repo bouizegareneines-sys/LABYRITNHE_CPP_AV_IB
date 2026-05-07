@@ -7,7 +7,7 @@
 
 /** 
  * @file Case.h
- * @brief Créer les différents types de cases qui héritent de la classse mère virtuelle. Indique également si une case est franchissable. 
+ * @brief Créer les différents types de cases qui héritent de la classse mère virtuelle. Indique également si une case est franchissable et ne déclenche pas de combat. 
  */
 
 #include "Aventurier.h"
@@ -17,8 +17,9 @@ using namespace std;
 
 class Case {
     private :
-        // Booléen qui indique si la case est franchissable par le joueur
+        // Booléen qui indique si la case est franchissable et ne déclenche pas de combat par le joueur
         bool pass = false;
+        // Booléen qui indique si la case peut initier un combat
         bool battable = false;
     public : 
         Case(bool pass,bool battable) : pass(pass),battable(battable) {};
@@ -34,7 +35,7 @@ class Mur : public Case {
     /**
      * @brief Classe enfant de Case (polymorphisme) qui génére un objet de type case : ici un mur 
      * Les méthodes sont définit dans la classe parente et sont override ici. 
-     * Mur n'est pas franchissable, on a donc Mur(): Case(false)
+     * Mur n'est pas franchissable et ne déclenche pas de combat, on a donc Mur(): Case(false,false)
      */
     public :
         Mur() : Case(false,false){};
@@ -46,7 +47,7 @@ class Passage : public Case {
        /**
      * @brief Classe enfant de Case (polymorphisme) qui génére un objet de type case : ici un passage 
      * Les méthodes sont définit dans la classe parente et sont override ici. 
-     * Passage est franchissable, on a donc Passage(): Case(true)
+     * Passage est franchissable et ne déclenche pas de combat, on a donc Passage(): Case(true,false)
      */
     public :
         Passage() : Case(true,false){};
@@ -58,7 +59,7 @@ class Tresor : public Case{
        /**
      * @brief Classe enfant de Case (polymorphisme) qui génére un objet de type case : ici un trésor 
      * Les méthodes sont définit dans la classe parente et sont override ici. 
-     * Trésor est franchissable, on a donc Trésor(): Case(true)
+     * Trésor est franchissable et ne déclenche pas de combat, on a donc Trésor(): Case(true,false)
      */
     public :
         Tresor() : Case(true,false){};
@@ -71,7 +72,7 @@ class Monstre : public Case {
     /**
      * @brief Classe enfant de Case (polymorphisme) qui génére un objet de type case : ici un monstre 
      * Les méthodes sont définit dans la classe parente et sont override ici. 
-     * Monstre est franchissable, on a donc Monstre(): Case(true)
+     * Monstre est franchissable et déclenche un combat, on a donc Monstre(): Case(true,true)
      */
     public :
         Monstre() : Case(true,true){};
@@ -84,7 +85,7 @@ class Piege : public Case{
     /**
      * @brief Classe enfant de Case (polymorphisme) qui génére un objet de type case : ici un piège 
      * Les méthodes sont définit dans la classe parente et sont override ici. 
-     * Piège est franchissable, on a donc piege(): Case(true)
+     * Piège est franchissable et ne déclenche pas de combat, on a donc piege(): Case(true,false)
      */
     public :
         Piege() : Case(true,false){};
