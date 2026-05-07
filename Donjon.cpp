@@ -15,7 +15,7 @@ Donjon::Donjon()
     this->hauteur=21;
     this->grille.assign(21,vector<Case*>(21, nullptr));
     this->depart={0,0};
-    this->arrivee={20,20};
+    this->arrivee={19,19};
 }
 
 Donjon::Donjon(int largeur,int hauteur)
@@ -50,6 +50,10 @@ pair<int,int>& Donjon::getArrivee(){
 }
 vector<pair<int,int>>& Donjon::getChemin(){
     return this->chemin_restant;
+}
+
+void Donjon::setFlag(bool flag){
+    this->flag_chemin=flag;
 }
 
 
@@ -172,7 +176,7 @@ void Donjon::placerElement(vector<vector<Case*>>& grille){
     }
 }
 
-void Donjon::afficher(pair<int,int> posJoueur)
+void Donjon::afficher(pair<int,int> posJoueur,vector<pair<int,int>> chemin)
 {
     cout << "+";
     for(int j=0;j<largeur;j++){
@@ -183,16 +187,16 @@ void Donjon::afficher(pair<int,int> posJoueur)
     cout << " ";
     cout << "+"<< endl;
 
-    
+
     for (int i=0;i<hauteur;i++){
         cout << "|";
         for(int j=0;j<largeur;j++){
-            if ((posJoueur.first==i)&&(posJoueur.second==j)){
-                cout << " ";
+            cout << " ";
+            if ((posJoueur.first==i) && (posJoueur.second==j)){
                 joueur.afficher();
-            }
-            else {
-                cout << " ";
+            } else if (flag_chemin && count(chemin.begin(), chemin.end(), make_pair(i,j)) > 0){
+                cout << ".";
+            } else {
                 cout << (*grille[i][j]).afficher();
             }
         }
@@ -207,7 +211,7 @@ void Donjon::afficher(pair<int,int> posJoueur)
     }
     cout << " ";
     cout << "+"<< endl;
-
+    flag_chemin=false;
 }
 
 vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<int,int> depart,pair<int,int> arrivee)
@@ -244,7 +248,7 @@ vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<
                     case 1:
                         x_new = x_courant;
                         y_new = y_courant - 1;
-                        if ((y_new>1) && (visite[x_new][y_new]==false) && ((*grille[x_new][y_new]).peutPasser()==true)){
+                        if ((y_new>=1) && (visite[x_new][y_new]==false) && ((*grille[x_new][y_new]).peutPasser()==true)){
                             visite[x_new][y_new]=true;
                             parent[x_new][y_new]=courant;
                             file.push({x_new,y_new});
@@ -274,7 +278,7 @@ vector<pair<int,int>> Donjon::trouverChemin(vector<vector<Case *>>& grille,pair<
                     case 4:
                         x_new = x_courant - 1;
                         y_new = y_courant;
-                        if ((x_new<=1) && (visite[x_new][y_new]==false) && ((*grille[x_new][y_new]).peutPasser()==true)){
+                        if ((x_new>=1) && (visite[x_new][y_new]==false) && ((*grille[x_new][y_new]).peutPasser()==true)){
                             visite[x_new][y_new]=true;
                             parent[x_new][y_new]=courant;
                             file.push({x_new,y_new});

@@ -24,6 +24,23 @@ void Jeu::resoudreCase(Case* c) {
     }
 }
 
+void Jeu::Combat(Donjon& plateau,Case* c,int nx, int ny, int posx,int posy){
+    cout << "Un Monstre apparait! Voulez-vous vous battre? (y/n):" ;
+    char rep;
+    cin >> rep;
+    switch (rep){
+        case 'y':
+            resoudreCase(c);
+            joueur.deplacer(nx, ny);
+            cout << "Le Monstre est vaincu! Mais il a fait quelques degats" <<endl;
+            plateau.getGrille()[posx+nx][posy+ny] = CaseFactory::createCase(TypeCase::PASSAGE);
+            break;
+        case 'n':
+            cout << "Vous arrivez a fuir!" << endl;
+            break;
+    }
+}
+
 void Jeu::EndGame(Donjon& plateau) {
     if (!joueur.estVivant()) {
         cout << "Fin de la partie : Vous etes mort ...." << endl;
@@ -34,22 +51,61 @@ void Jeu::EndGame(Donjon& plateau) {
 
 void Jeu::BoucleDeJeu(Donjon& plateau) {
     char commande;
-    
+    vector<pair<int,int>> chemin_opti;
+
     while (joueur.estVivant() && !(joueur.getPos() == plateau.getArrivee())) {
-        plateau.afficher(joueur.getPos());
+        
+        plateau.afficher(joueur.getPos(),chemin_opti);
         afficherStatut(plateau); 
 
         cout << "(z,q,s,d) pour bouger, p pour demander chemin ideal : ";
         cin >> commande; 
 
         switch(commande) {
-            case 'z': joueur.deplacer(0, 1);  break;
-            case 's': joueur.deplacer(0, -1); break;
-            case 'q': joueur.deplacer(-1, 0); break;
-            case 'd': joueur.deplacer(1, 0);  break;
-            case 'p': plateau.trouverChemin(plateau.getGrille(), plateau.getDepart(), plateau.getArrivee()); break;
-            default: cout << "Mauvaise touche " << endl; continue; // 'continue' évite de résoudre la case si on n'a pas bougé
+            case 'z': if (plateau.getCase(joueur.getPos().first-1,joueur.getPos().second)->peutPasser()) 
+                { 
+                    if (plateau.getCase(joueur.getPos().first-1,joueur.getPos().second)->peutSeBattre()){ 
+                        Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),-1,0,joueur.getPos().first,joueur.getPos().second);
+                        continue;
+                    }                   
+                    else {joueur.deplacer(-1, 0);}
+                }  
+                break;
+            case 's': if (plateau.getCase(joueur.getPos().first+1,joueur.getPos().second)->peutPasser()) 
+                {
+                    if (plateau.getCase(joueur.getPos().first+1,joueur.getPos().second)->peutSeBattre()){
+                        Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),1,0,joueur.getPos().first,joueur.getPos().second);
+                        continue;
+                    }
+                    else {joueur.deplacer(1, 0);}
+                } 
+                break;
+            case 'q': if (plateau.getCase(joueur.getPos().first,joueur.getPos().second-1)->peutPasser()) 
+            {
+                if (plateau.getCase(joueur.getPos().first,joueur.getPos().second-1)->peutSeBattre()){
+                    Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),0,-1,joueur.getPos().first,joueur.getPos().second);
+                    continue;
+                }
+                else {joueur.deplacer(0, -1);}
+            } 
+                break;
+            case 'd': if (plateau.getCase(joueur.getPos().first,joueur.getPos().second+1)->peutPasser()) 
+            {
+                if (plateau.getCase(joueur.getPos().first-1,joueur.getPos().second)->peutSeBattre()){
+                    Combat(plateau,plateau.getCase(joueur.getPos().first-1,joueur.getPos().second),0,1,joueur.getPos().first,joueur.getPos().second);
+                    continue;
+                }
+                else {joueur.deplacer(0, 1);}
+            }  
+                break;
+            case 'p': 
+                chemin_opti = plateau.trouverChemin(plateau.getGrille(), joueur.getPos(), plateau.getArrivee());
+                plateau.setFlag(true);
+                break;
+            default: cout << "Mauvaise touche " << endl; 
+            continue; // 'continue' évite de résoudre la case si on n'a pas bougé
         }
+
 
         Case* caseActuelle = plateau.getCase(joueur.getPos().first, joueur.getPos().second);
         resoudreCase(caseActuelle);

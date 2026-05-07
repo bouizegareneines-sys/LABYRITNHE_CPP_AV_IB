@@ -27,6 +27,7 @@ class Jeu
         
         void afficherStatut(Donjon& plateau);
         void resoudreCase(Case* c);
+        void Combat(Donjon& plateau,Case* c,int nx, int ny, int posx,int posy);
         void EndGame(Donjon& plateau);
         void BoucleDeJeu(Donjon& plateau);
         

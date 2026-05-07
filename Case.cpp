@@ -32,22 +32,24 @@ char Monstre::afficher() {
 }
 
 int Monstre::effet(Aventurier& a) {
+    
     if (a.getSante() > 70) {
-        a.setSante(a.getSante() - 50);
+        a.setSante(a.getSante() - 40);
         return a.getSante();
     } 
     else {
-        a.setPos(0,0);
         return 0;
     }
+
 }
+        
 
 
 char Piege ::  afficher (){
     return 'T';
 }
 int Piege :: effet(Aventurier& a){
-    a.setSante(a.getSante() -50) ;
+    a.setSante(a.getSante() -10) ;
     if (a.getInventaire() != 0){
         a.setInventaire(a.getInventaire() -1) ; 
         return a.getInventaire(); 
